@@ -1,0 +1,29 @@
+# Основные зависимости
+Flask==3.0.2
+Flask-Login==0.6.3
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.1
+SQLAlchemy==2.0.27
+psycopg2-binary==2.9.9
+pg8000==1.30.5
+
+# Для работы с изображениями и видео
+Pillow==10.2.0
+opencv-python==4.9.0.80
+ultralytics==8.3.130
+
+# Для работы с GigaChat API
+gigachat==0.1.10
+requests==2.31.0
+
+# Дополнительные утилиты
+python-dotenv==1.0.1
+numpy==1.26.4
+pandas==2.2.1
+
+# Для работы с GPU
+torch==2.2.1
+torchvision==0.17.1
+
+# Для безопасности
+cryptography==42.0.5 

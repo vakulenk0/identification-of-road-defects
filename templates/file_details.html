@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Детали файла{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    {% set ext = file_history.filename.split('.')[-1].lower() %}
+                    {% if ext in ['mp4', 'avi', 'mov'] %}
+                        <h5 class="mb-0">Оригинальный файл</h5>
+                    {% else %}
+                        <h5 class="mb-0">Оригинальное изображение</h5>
+                    {% endif %}
+                </div>
+                <div class="card-body text-center" style="display: flex; align-items: center; justify-content: center;">
+                    {% if ext in ['mp4', 'avi', 'mov'] %}
+                        <a href="{{ url_for('static', filename='uploads/' + file_history.filename) }}" class="btn btn-primary me-2" title="Скачать оригинальный файл" download>
+                            <i class="fas fa-download"></i> Скачать оригинальный файл
+                        </a>
+                    {% else %}
+                        <img src="{{ url_for('static', filename='uploads/' + file_history.filename) }}" class="img-fluid" alt="Original Image" style="max-width: 100%; max-height: 80vh; object-fit: contain;">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Результат детекции</h5>
+                </div>
+                <div class="card-body text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    {% if ext in ['mp4', 'avi', 'mov'] %}
+                        <a href="{{ url_for('main.download_file', filename=file_history.processed_path) }}" class="btn btn-primary me-2" title="Скачать обработанный файл" download>
+                            <i class="fas fa-download"></i> Скачать обработанный файл
+                        </a>
+                    {% else %}
+                        <img src="{{ url_for('main.download_file', filename=file_history.processed_path) }}" class="img-fluid" alt="Processed Image" style="max-width: 100%; max-height: 80vh; object-fit: contain;">
+                        <div class="mt-3">
+                            <a href="{{ url_for('main.download_file', filename=file_history.processed_path) }}" class="btn btn-primary me-2" title="Скачать обработанное изображение" download>
+                                <i class="fas fa-download"></i>
+                            </a>
+                            <a href="{{ url_for('main.download_file', filename=file_history.processed_path) }}" class="btn btn-primary" title="Открыть в новой вкладке" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Результаты анализа</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Результат детекции:</h6>
+                            <pre class="bg-light p-3 rounded">{{ file_history.result }}</pre>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Анализ LLM:</h6>
+                            <div class="bg-light p-3 rounded" style="white-space: normal; max-height: 300px; overflow-y: auto; text-align: left;">
+                                {{ llm_response }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
