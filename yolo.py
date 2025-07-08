@@ -3,23 +3,21 @@ import torch
 from ultralytics import YOLO
 
 if __name__ == '__main__':
-    # Загружаем предобученную модель YOLOv11
-    model = YOLO("yolo11x.pt")  # Можно заменить на yolov11s.pt или yolo11m.pt
+    model = YOLO("yolo11x.pt")  
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f'Модель обучается на {device}')
     model.to(device=device)
 
-    # Включаем аугментацию данных для повышения устойчивости модели
+    
     model.train(
-        data="./datasets/data.yaml",      # Путь к конфигурационному файлу датасета
-        epochs=75,                        # Количество эпох обучения
-        batch=16,                         # Размер батча
-        imgsz=640,                        # Размер входных изображений
+        data="./datasets/data.yaml",     
+        epochs=75,                        
+        batch=16,                         
+        imgsz=640,                        
         workers=4,                        # Количество потоков для загрузки и предобработки данных
-        name='yolo11m-road-damage',       # Название эксперимента
-        patience=20,                      # Раннее завершение обучения
-        project='runs/train',             # Папка для логов и весов
-        augment=True,                     # Включить стандартную аугментацию данных
+        name='yolo11m-road-damage',       
+        patience=20,                     
+        project='runs/train',                                  
         
         # --- Геометрические аугментации ---
         degrees=10.0,                   # Вращение изображений (угол в градусах)
